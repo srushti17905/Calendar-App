@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Calendar_App</string>
+    <string name="title_activity_add_page">AddPage</string>
+    <string name="title_activity_edit_page">Edit_Page</string>
+    <string name="title_activity_calendar">Calendar</string>
+    <string name="title_activity_demo">Demo</string>
+    <string name="title_activity_my_calendar">My_Calendar</string>
+    <string name="title_activity_log_in_page">LogIn_Page</string>
+    <string name="title_activity_sign_up">Sign_Up</string>
+    <string name="title_activity_user_info">UserInfo</string>
+</resources>
