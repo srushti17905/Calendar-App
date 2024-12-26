@@ -346,6 +346,7 @@ class Sign_Up : ComponentActivity() {
                                 verticalAlignment = Alignment.CenterVertically,
                                 modifier = Modifier
                                     .height(100.dp)
+                                    .alpha(0.7f)
                                     .width(240.dp)
                             ) {
                                 Text(

@@ -13,26 +13,28 @@
         android:theme="@style/Theme.Calendar_App"
         tools:targetApi="31">
         <activity
-            android:name=".UserInfo"
+            android:name=".Splash_Screen"
             android:exported="true"
-            android:label="@string/title_activity_user_info"
+            android:label="@string/title_activity_splash_screen"
             android:theme="@style/Theme.Calendar_App">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".Sign_Up"
             android:exported="true"
             android:label="@string/title_activity_sign_up"
             android:theme="@style/Theme.Calendar_App">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".LogIn_Page"
@@ -40,43 +42,17 @@
             android:label="@string/title_activity_log_in_page"
             android:theme="@style/Theme.Calendar_App">
 
-             <intent-filter>
-             <action android:name="android.intent.action.MAIN" />
+<!--             <intent-filter>-->
+<!--             <action android:name="android.intent.action.MAIN" />-->
 
 
-             <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>
+<!--             <category android:name="android.intent.category.LAUNCHER" />-->
+<!--             </intent-filter>-->
         </activity>
         <activity
             android:name=".My_Calendar"
             android:exported="true"
             android:label="@string/title_activity_my_calendar"
-            android:theme="@style/Theme.Calendar_App">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
-        <activity
-            android:name=".Demo"
-            android:exported="true"
-            android:label="@string/title_activity_demo"
-            android:theme="@style/Theme.Calendar_App">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
-        <activity
-            android:name=".Calendar"
-            android:exported="true"
-            android:label="@string/title_activity_calendar"
             android:theme="@style/Theme.Calendar_App">
 
             <!-- <intent-filter> -->
@@ -100,29 +76,14 @@
             <!-- </intent-filter> -->
         </activity>
         <activity
-            android:name=".AddPage"
-            android:exported="true"
-            android:label="@string/title_activity_add_page"
-            android:theme="@style/Theme.Calendar_App">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
-        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.Calendar_App">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
     </application>
 

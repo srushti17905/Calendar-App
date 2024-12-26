@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.widget.TextView
 import android.widget.Toast
@@ -54,19 +55,9 @@ import com.example.calendar_app.ui.theme.Calendar_AppTheme
 
 class LogIn_Page : ComponentActivity() {
 
-    companion object {
-
-        lateinit var sp: SharedPreferences
-        lateinit var edit: Editor
-
-    }
-
-    @SuppressLint("UnrememberedMutableState")
+    @SuppressLint("UnrememberedMutableState", "CommitPrefEdits")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        sp = getSharedPreferences("Login", Context.MODE_PRIVATE)
-        edit = sp.edit()
 
         enableEdgeToEdge()
         setContent {
@@ -75,6 +66,14 @@ class LogIn_Page : ComponentActivity() {
             val password = mutableStateOf("")
 
             Calendar_AppTheme {
+
+                val sharedPreferences = getSharedPreferences("user_prefs" , Context.MODE_PRIVATE)
+                val editor = sharedPreferences.edit()
+
+                editor.putBoolean("is_logged_in" , true)
+                editor.putString("username" , username.value)
+
+                editor.apply()
 
                 Surface(modifier = Modifier.fillMaxSize()) {
 
@@ -93,9 +92,7 @@ class LogIn_Page : ComponentActivity() {
                                 .height(200.dp)
                                 .fillMaxWidth()
                         ) {
-
                             Text(text = "Log In", fontSize = 50.sp, color = Color.White)
-
                         }
 
                         Row(
@@ -105,13 +102,11 @@ class LogIn_Page : ComponentActivity() {
                                 .height(100.dp)
                                 .fillMaxWidth()
                         ) {
-
                             Text(
                                 text = "Enter Your Account",
                                 fontSize = 15.sp,
                                 color = Color.Black
                             )
-
                         }
 
                         Row(
@@ -121,7 +116,6 @@ class LogIn_Page : ComponentActivity() {
                                 .height(100.dp)
                                 .fillMaxWidth()
                         ) {
-
                             OutlinedTextField(
                                 value = username.value,
                                 onValueChange = { username.value = it },
@@ -148,7 +142,6 @@ class LogIn_Page : ComponentActivity() {
                                 ),
                                 shape = RoundedCornerShape(10.dp), minLines = 1, maxLines = 1
                             )
-
                         }
 
                         Row(
@@ -158,7 +151,6 @@ class LogIn_Page : ComponentActivity() {
                                 .height(100.dp)
                                 .fillMaxWidth()
                         ) {
-
                             OutlinedTextField(
                                 value = password.value,
                                 onValueChange = { password.value = it },
@@ -185,7 +177,6 @@ class LogIn_Page : ComponentActivity() {
                                 ),
                                 shape = RoundedCornerShape(10.dp), minLines = 1, maxLines = 1
                             )
-
                         }
 
                         Row(
@@ -195,7 +186,6 @@ class LogIn_Page : ComponentActivity() {
                                 .height(100.dp)
                                 .fillMaxWidth()
                         ) {
-
                             OutlinedButton(
                                 onClick = {
 
@@ -214,11 +204,15 @@ class LogIn_Page : ComponentActivity() {
                                                     this@LogIn_Page,
                                                     MainActivity::class.java
                                                 )
+                                            intent.putExtra("name" , cursor.getString(1))
+                                            intent.putExtra("email" , cursor.getString(2))
+                                            intent.putExtra("number" , cursor.getString(3))
+                                            intent.putExtra("pass" , cursor.getString(4))
+
                                             startActivity(intent)
 
                                             finish()
                                         }
-
                                     }
 
 
@@ -232,7 +226,6 @@ class LogIn_Page : ComponentActivity() {
                             ) {
                                 Text(text = "LogIn", fontSize = 25.sp, color = Color.Black)
                             }
-
                         }
 
                         Spacer(modifier = Modifier.height(160.dp))
@@ -242,7 +235,6 @@ class LogIn_Page : ComponentActivity() {
                                 .height(30.dp)
                                 .fillMaxWidth()
                         ) {
-
                             Row(
                                 horizontalArrangement = Arrangement.End,
                                 verticalAlignment = Alignment.CenterVertically,
@@ -250,13 +242,11 @@ class LogIn_Page : ComponentActivity() {
                                     .height(30.dp)
                                     .width(230.dp)
                             ) {
-
                                 Text(
                                     text = "don't have an account ? ",
                                     fontSize = 20.sp,
                                     color = Color.Black
                                 )
-
                             }
 
                             Row(
@@ -267,7 +257,6 @@ class LogIn_Page : ComponentActivity() {
                                     .alpha(0.6f)
                                     .width(100.dp)
                             ) {
-
                                 Text(
                                     text = "Sign Up",
                                     fontSize = 20.sp,
@@ -279,7 +268,6 @@ class LogIn_Page : ComponentActivity() {
 
                                     }
                                 )
-
                             }
 
 

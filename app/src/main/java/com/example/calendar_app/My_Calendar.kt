@@ -394,19 +394,15 @@ class My_Calendar : ComponentActivity() {
                             }
 
                             Row(
-                                horizontalArrangement = Arrangement.End,
+                                horizontalArrangement = Arrangement.Center,
                                 verticalAlignment = Alignment.CenterVertically,
                                 modifier = Modifier
                                     .height(70.dp)
-                                    .clickable {
-
-
-                                    }
-                                    .width(180.dp)
+                                    .width(200.dp)
                             ) {
                                 Text(
-                                    text = "Menage Your Day",
-                                    fontSize = 20.sp,
+                                    text = "What’s your plan for today?",
+                                    fontSize = 16.sp,
                                     color = star.bcolor,
                                     fontWeight = FontWeight.ExtraBold,
                                     fontFamily = FontFamily(Font(R.font.title))
@@ -414,7 +410,7 @@ class My_Calendar : ComponentActivity() {
                             }
 
                             Row(
-                                horizontalArrangement = Arrangement.End,
+                                horizontalArrangement = Arrangement.Center,
                                 verticalAlignment = Alignment.CenterVertically,
                                 modifier = Modifier
                                     .height(70.dp)
