@@ -51,6 +51,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.calendar_app.Splash_Screen.Companion
 import com.example.calendar_app.ui.theme.Calendar_AppTheme
 
 class LogIn_Page : ComponentActivity() {
@@ -62,18 +63,13 @@ class LogIn_Page : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
 
+            val sharedPreferences = getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+
             val username = mutableStateOf("")
             val password = mutableStateOf("")
 
             Calendar_AppTheme {
-
-                val sharedPreferences = getSharedPreferences("user_prefs" , Context.MODE_PRIVATE)
-                val editor = sharedPreferences.edit()
-
-                editor.putBoolean("is_logged_in" , true)
-                editor.putString("username" , username.value)
-
-                editor.apply()
 
                 Surface(modifier = Modifier.fillMaxSize()) {
 
@@ -199,23 +195,33 @@ class LogIn_Page : ComponentActivity() {
 
                                         if (username.value != "" && password.value != "") {
 
+                                            Toast.makeText(
+                                                this@LogIn_Page,
+                                                "Login Successfully",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+
                                             val intent =
                                                 Intent(
                                                     this@LogIn_Page,
                                                     MainActivity::class.java
                                                 )
-                                            intent.putExtra("name" , cursor.getString(1))
-                                            intent.putExtra("email" , cursor.getString(2))
-                                            intent.putExtra("number" , cursor.getString(3))
-                                            intent.putExtra("pass" , cursor.getString(4))
+                                            intent.putExtra("name", cursor.getString(1))
+                                            intent.putExtra("email", cursor.getString(2))
+                                            intent.putExtra("number", cursor.getString(3))
+                                            intent.putExtra("pass", cursor.getString(4))
+
+                                            editor.putString("name_pref", cursor.getString(1))
+                                            editor.putString("email_pref", cursor.getString(2))
+                                            editor.putString("number_pref", cursor.getString(3))
+
+                                            editor.putBoolean("is_logged_in", true)
+                                            editor.apply()
 
                                             startActivity(intent)
-
                                             finish()
                                         }
                                     }
-
-
                                 },
                                 modifier = Modifier
                                     .height(60.dp)

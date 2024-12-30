@@ -11,10 +11,8 @@ object star {
     var buttonColor = Color(0xFFF3F3CC)
     var border = Color(0xFFB9B98D)
     var red = Color(0xFFF13529)
-    val splashscreen = Color(0xFFAAB9C7)
-    var lBlue = Color(0xFFC5D9D9)
-    var lpink = Color(0xFFE7D0D0)
-
+    var lBlue = Color(0xFFB3D5D5)
+    var lpink = Color(0xFFDEB8B8)
     var bcolor = Color(0xFFC08181)
 
 }

@@ -4,9 +4,11 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.SharedPreferences.Editor
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -29,13 +31,24 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.calendar_app.ui.theme.Calendar_AppTheme
+import kotlin.properties.Delegates
 
 class Splash_Screen : ComponentActivity() {
+
+    companion object {
+
+        lateinit var sharedPreferences: SharedPreferences
+        lateinit var editor: Editor
+
+    }
+
     @SuppressLint("RememberReturnType", "CommitPrefEdits")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val sharedPreferences = getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+        sharedPreferences = getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+        editor = sharedPreferences.edit()
+
         val isLoggedIn = sharedPreferences.getBoolean("is_logged_in", false)
 
         enableEdgeToEdge()
@@ -63,14 +76,15 @@ class Splash_Screen : ComponentActivity() {
 
                     if (isLoggedIn) {
                         startActivity(Intent(this@Splash_Screen, MainActivity::class.java))
-                    } else {
+                        return@postDelayed
+                    }
+                    else {
                         startActivity(Intent(this@Splash_Screen, LogIn_Page::class.java))
                     }
 
                     finish()
 
-                }, 1000)
-
+                }, 2000)
 
             }
         }

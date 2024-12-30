@@ -91,8 +91,6 @@ class My_Calendar : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-
-
             Calendar_AppTheme {
 
                 Scaffold(topBar = {
@@ -163,6 +161,7 @@ class My_Calendar : ComponentActivity() {
                         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = star.lpink),
 
                         navigationIcon = {
+
                             Icon(
                                 Icons.AutoMirrored.Outlined.ArrowBack,
                                 contentDescription = null,
@@ -317,7 +316,8 @@ class My_Calendar : ComponentActivity() {
                                                         fontSize = 18.sp,
                                                         color = if (MainActivity.date == day + 1) {
                                                             star.red
-                                                        } else {
+                                                        }
+                                                        else {
                                                             Color.DarkGray
                                                         },
                                                         fontWeight = FontWeight.W100,
@@ -336,28 +336,14 @@ class My_Calendar : ComponentActivity() {
                                                                     "===>",
                                                                     "onCreate: ${showDate}"
                                                                 )
-
-
-
                                                             }
                                                     )
-
-
                                                 }
-
-
                                             }
-
-
                                         }
-
                                     }
-
-
                                 }
-
                                 // todo(finish)
-
                             }
 
                         }
@@ -382,7 +368,6 @@ class My_Calendar : ComponentActivity() {
                                 .height(70.dp)
                                 .fillMaxWidth()
                         ) {
-
                             Row(
                                 horizontalArrangement = Arrangement.Center,
                                 verticalAlignment = Alignment.CenterVertically,
@@ -390,7 +375,6 @@ class My_Calendar : ComponentActivity() {
                                     .height(70.dp)
                                     .width(70.dp)
                             ) {
-
                             }
 
                             Row(
@@ -421,7 +405,7 @@ class My_Calendar : ComponentActivity() {
                                     painter = painterResource(R.drawable.add),
                                     contentDescription = null,
                                     modifier = Modifier
-                                        .height(50.dp)
+                                        .height(40.dp)
                                         .clickable {
 
                                             show.value = true
@@ -430,16 +414,13 @@ class My_Calendar : ComponentActivity() {
                                             showMonth = MainActivity.month
                                             showYear = "${MainActivity.year}"
 
-
                                         }
-                                        .width(50.dp),
+                                        .width(40.dp),
                                     tint = Color.Black
                                 )
 
                             }
                         }
-
-
                     }
                 }
 

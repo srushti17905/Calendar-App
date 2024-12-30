@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.SharedPreferences.Editor
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -51,13 +52,15 @@ class Sign_Up : ComponentActivity() {
 
     companion object {
 
-
         val name = mutableStateOf("")
         val email = mutableStateOf("")
         val phone = mutableStateOf("")
         val pass = mutableStateOf("")
 
         val setError = mutableStateOf(false)
+
+        lateinit var sharedPreferences: SharedPreferences
+        lateinit var editor: Editor
 
     }
 
@@ -66,6 +69,9 @@ class Sign_Up : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+
+            sharedPreferences = getSharedPreferences("your_pref", Context.MODE_PRIVATE)
+            editor = sharedPreferences.edit()
 
             Calendar_AppTheme {
 
@@ -77,14 +83,13 @@ class Sign_Up : ComponentActivity() {
                         contentScale = ContentScale.FillBounds, modifier = Modifier.alpha(0.7f)
                     )
 
-                    Column(modifier = Modifier.fillMaxSize()) {
-
+                    Column(modifier = Modifier.fillMaxSize())
+                    {
                         Row(
                             modifier = Modifier
                                 .height(70.dp)
                                 .fillMaxWidth()
                         ) {
-
                         }
 
                         Row(
@@ -104,20 +109,17 @@ class Sign_Up : ComponentActivity() {
                                 .height(50.dp)
                                 .fillMaxWidth()
                         ) {
-
                             Text(
                                 text = "Enter Your Credential",
                                 fontSize = 16.sp,
                                 color = Color.White
                             )
-
                         }
                         Row(
                             modifier = Modifier
                                 .height(10.dp)
                                 .fillMaxWidth()
                         ) {
-
                         }
 
                         Row(
@@ -166,13 +168,11 @@ class Sign_Up : ComponentActivity() {
                                 value = email.value,
                                 onValueChange = { email.value = it },
                                 leadingIcon = {
-
                                     Image(
                                         painter = painterResource(R.drawable.email),
                                         contentDescription = null,
                                         modifier = Modifier.height(20.dp)
                                     )
-
                                 },
                                 label = { Text(text = "Email", fontSize = 15.sp) },
                                 isError = if (!email.value.contains("@gmail.com") && email.value.isNotEmpty()) {
@@ -190,6 +190,7 @@ class Sign_Up : ComponentActivity() {
                                     focusedTextColor = Color.White,
                                     errorCursorColor = star.red,
                                     errorIndicatorColor = star.red,
+                                    errorContainerColor = Color.Transparent,
                                     focusedLabelColor = Color.Black,
                                     unfocusedContainerColor = Color.Transparent,
                                     focusedContainerColor = Color.Transparent,
@@ -255,13 +256,11 @@ class Sign_Up : ComponentActivity() {
                                 value = pass.value,
                                 onValueChange = { pass.value = it },
                                 leadingIcon = {
-
                                     Image(
                                         painter = painterResource(R.drawable.lock),
                                         contentDescription = null,
                                         modifier = Modifier.height(20.dp)
                                     )
-
                                 },
                                 label = { Text(text = "Password", fontSize = 15.sp) },
                                 isError = if (pass.value.length != 6 && pass.value.isNotEmpty()) {
@@ -278,6 +277,7 @@ class Sign_Up : ComponentActivity() {
                                     focusedIndicatorColor = star.bcolor,
                                     focusedTextColor = Color.White,
                                     focusedLabelColor = Color.Black,
+                                    errorContainerColor = Color.Transparent,
                                     errorIndicatorColor = star.red,
                                     errorCursorColor = star.red,
                                     unfocusedContainerColor = Color.Transparent,
@@ -295,31 +295,25 @@ class Sign_Up : ComponentActivity() {
                                 .height(150.dp)
                                 .fillMaxWidth()
                         ) {
-
                             OutlinedButton(
                                 onClick = {
 
+                                    if (name.value != "" && email.value != "" && phone.value != "" && pass.value != "") {
 
+                                        val intent =
+                                            Intent(this@Sign_Up, LogIn_Page::class.java)
 
-                                        if (name.value != "" && email.value != "" && phone.value != "" && pass.value != "") {
+                                        val myDatabase = Database(applicationContext)
+                                        myDatabase.insertData(
+                                            name = name.value,
+                                            email = email.value,
+                                            number = phone.value,
+                                            pass = pass.value
+                                        )
 
-                                            val intent =
-                                                Intent(this@Sign_Up, LogIn_Page::class.java)
-
-                                            val myDatabase = Database(applicationContext)
-                                            myDatabase.insertData(
-                                                name = name.value,
-                                                email = email.value,
-                                                number = phone.value,
-                                                pass = pass.value
-                                            )
-
-                                            startActivity(intent)
-                                            finish()
-                                        }
-
-
-
+                                        startActivity(intent)
+                                        finish()
+                                    }
                                 },
                                 modifier = Modifier
                                     .height(55.dp)
@@ -330,7 +324,6 @@ class Sign_Up : ComponentActivity() {
                             ) {
                                 Text(text = "Sign Up", fontSize = 25.sp, color = Color.Black)
                             }
-
                         }
 
                         Spacer(modifier = Modifier.height(20.dp))
@@ -340,7 +333,6 @@ class Sign_Up : ComponentActivity() {
                                 .height(100.dp)
                                 .fillMaxWidth()
                         ) {
-
                             Row(
                                 horizontalArrangement = Arrangement.End,
                                 verticalAlignment = Alignment.CenterVertically,
@@ -375,7 +367,6 @@ class Sign_Up : ComponentActivity() {
 
                                     })
                             }
-
                         }
 
                     }

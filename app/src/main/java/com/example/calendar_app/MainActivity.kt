@@ -6,6 +6,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.database.Cursor
 import android.icu.util.Calendar
 import android.net.Uri
@@ -60,6 +61,7 @@ import androidx.compose.material3.CardColors
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
@@ -210,7 +212,6 @@ class MainActivity : ComponentActivity() {
         val month = Month_List[cal.get(Calendar.MONTH)]
         val year = cal.get(Calendar.YEAR)
         var selectDate = 0
-
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -220,7 +221,12 @@ class MainActivity : ComponentActivity() {
     )
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        val sharedPreferences = getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()
 
         myDatabase = Database(applicationContext)
@@ -260,25 +266,20 @@ class MainActivity : ComponentActivity() {
         setContent {
 
             val listState = rememberLazyGridState(initialFirstVisibleItemIndex = defaultDate - 2)
+            val name = sharedPreferences.getString("name_pref", "ridi")
+            val email = sharedPreferences.getString("email_pref", "gmail")
+            val number = sharedPreferences.getString("number_pref", "12345")
 
             Calendar_AppTheme {
 
                 val all = show()
                 val allDataList = mutableStateListOf<showData>()
-                val name = intent.getStringExtra("name")
-                val email = intent.getStringExtra("email")
-                val number = intent.getStringExtra("number")
-
-                val sharedPreferences =
-                    getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
-                val editor = sharedPreferences.edit()
 
                 for (Data in all) {
 
                     if (Data.date.split("-")[0] == selectDate.toString()) {
                         allDataList.add(Data)
                     }
-
                 }
 
                 val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -289,7 +290,7 @@ class MainActivity : ComponentActivity() {
                         ModalDrawerSheet(
                             modifier = Modifier
                                 .fillMaxHeight()
-                                .width(250.dp), drawerContainerColor = star.splashscreen
+                                .width(250.dp), drawerContainerColor = star.lBlue
                         ) {
                             Spacer(
                                 modifier = Modifier
@@ -307,14 +308,14 @@ class MainActivity : ComponentActivity() {
                                     modifier = Modifier
                                         .height(80.dp)
                                         .width(130.dp)
-
                                 ) {
                                     Image(
-                                        painter = painterResource(R.drawable.man),
+                                        painter = painterResource(R.drawable.info),
                                         contentDescription = null,
                                         modifier = Modifier
                                             .height(60.dp)
                                             .width(70.dp)
+
                                     )
                                 }
 
@@ -354,7 +355,6 @@ class MainActivity : ComponentActivity() {
                                     .height(45.dp)
                                     .fillMaxWidth()
                             ) {
-
                                 Text(
                                     text = "    Task Tracker",
                                     fontSize = 20.sp,
@@ -364,7 +364,6 @@ class MainActivity : ComponentActivity() {
                                         Font(R.font.star)
                                     )
                                 )
-
                             }
 
 
@@ -373,7 +372,6 @@ class MainActivity : ComponentActivity() {
                                     .height(60.dp)
                                     .fillMaxWidth()
                             ) {
-
                                 Box(
                                     contentAlignment = Alignment.Center, modifier = Modifier
                                         .height(60.dp)
@@ -424,7 +422,6 @@ class MainActivity : ComponentActivity() {
                                         .height(60.dp)
                                         .width(70.dp)
                                 ) {
-
                                     Image(
                                         painter = painterResource(R.drawable.plus1),
                                         contentDescription = null,
@@ -432,7 +429,6 @@ class MainActivity : ComponentActivity() {
                                             .height(30.dp)
                                             .width(40.dp)
                                     )
-
                                 }
                                 Row(
                                     horizontalArrangement = Arrangement.Start,
@@ -591,18 +587,23 @@ class MainActivity : ComponentActivity() {
                                 ElevatedButton(
                                     onClick = {
 
-
-
                                         editor.clear()
                                         editor.apply()
+
+                                        Toast.makeText(
+                                            this@MainActivity,
+                                            "LogOut Successfull",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
 
                                         val intent =
                                             Intent(this@MainActivity, LogIn_Page::class.java)
                                         startActivity(intent)
+                                        finish()
 
                                     },
                                     modifier = Modifier
-                                        .height(50.dp)
+                                        .height(43.dp)
                                         .width(90.dp),
                                     shape = RoundedCornerShape(11.dp),
                                     elevation = ButtonDefaults.elevatedButtonElevation(20.dp),
@@ -682,12 +683,16 @@ class MainActivity : ComponentActivity() {
                         },
                         bottomBar = {
                             BottomAppBar(
-                                modifier = Modifier.height(50.dp),
+                                modifier = Modifier.height(70.dp),
                                 containerColor = star.lBlue
                             ) {
-                                Box(
-                                    modifier = Modifier.fillMaxSize(),
-                                    contentAlignment = Alignment.Center
+
+                                Row(
+                                    horizontalArrangement = Arrangement.End,
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    modifier = Modifier
+                                        .fillMaxHeight()
+                                        .width(230.dp),
                                 ) {
                                     Text(
                                         text = "Hello, beautiful day!",
@@ -699,6 +704,33 @@ class MainActivity : ComponentActivity() {
                                         )
                                     )
                                 }
+                                Row(
+                                    horizontalArrangement = Arrangement.End,
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    modifier = Modifier
+                                        .fillMaxHeight()
+                                        .width(110.dp)
+                                ) {
+                                    FloatingActionButton(
+                                        onClick = {
+
+                                            val intent =
+                                                Intent(this@MainActivity, My_Calendar::class.java)
+                                            startActivity(intent)
+
+                                        },
+                                        modifier = Modifier
+                                            .height(45.dp)
+                                            .width(45.dp), containerColor = star.box
+                                    ) {
+                                        Icon(
+                                            Icons.Outlined.Add,
+                                            contentDescription = null,
+                                            tint = Color.Black
+                                        )
+                                    }
+                                }
+
                             }
                         }
 

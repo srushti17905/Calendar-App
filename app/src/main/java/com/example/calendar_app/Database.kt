@@ -37,7 +37,6 @@ class Database(context: Context) : SQLiteOpenHelper(context, "mydb.db", null, 1)
             Log.d("==>", "insertShow: ${e.localizedMessage}")
 
         }
-
     }
 
     fun insertData(name: String, email: String, number: String, pass: String) {
@@ -52,7 +51,6 @@ class Database(context: Context) : SQLiteOpenHelper(context, "mydb.db", null, 1)
             Log.d("===>", "insertData: ${e.localizedMessage}")
 
         }
-
     }
 
     fun SelectData(name : String , pass : String) : Cursor{
